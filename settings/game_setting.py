@@ -3,9 +3,6 @@ class GameSetting:
 
     DEFAULT_TARGET_SCORE = 2000
 
-    # Nombre de faces des dés
-    NB_DICE_FACES = 6
-
     # Nombre de dés a jeter
     NB_DICE_ROLLS = 3
 

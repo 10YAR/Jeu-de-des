@@ -1,3 +1,4 @@
+from models.dice_model import DiceModel
 from models.player_model import PlayerModel
 from settings.game_setting import GameSetting
 
@@ -12,6 +13,7 @@ def main():
 
     while not game.get_player_winner():
         game.add_turn()
+        dice_model = DiceModel()
 
         for player_turn in game.PLAYERS:
             print(f"Turn #{game.TURNS} --> {player_turn.name} | score: {player_turn.score}")
@@ -21,7 +23,11 @@ def main():
             while player_turn.remaining_dice > 0:
                 print(player_turn.remaining_dice)
 
+                rolls = dice_model.get_rolls_dice(GameSetting.NB_DICE_ROLLS)
 
+                print('====')
+                print(rolls)
+                print('====')
 
 
 

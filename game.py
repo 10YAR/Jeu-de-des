@@ -25,22 +25,39 @@ def main():
 
                 rolls = dice_model.get_rolls_dice(GameSetting.NB_DICE_ROLLS)
 
-                print('====')
-                print(rolls)
-                print('====')
+                # TODO
+
+                # print('====')
+                # print(rolls)
+                # print('====')
+
+                # myRolls, myPoints, REMAINING[i], scoringDicesTotal = calculateBonus(myRolls, REMAINING[i],usedRemainings)
+                # myPoints, myRolls, REMAINING[i], scoringDicesTotal2 = calculatePoints(myRolls, myPoints, REMAINING[i],usedRemainings)
+
+                player_points_turn = 10
+
+                # potentialScore += myPoints
+                # print("Roll #" + str(rollNumber) + " : " + str(scoringDicesTotal) + " scoring dices, scoring " + str(
+                #     myPoints) + " pts, potential total turn score " + str(
+                #     SCORES[i] + potentialScore) + " pts, remaining dice to roll : " + str(REMAINING[i]))
+
+                if player_turn.get_player_turns_done(player_points_turn):
+                    turn_status_input = input("Continue ? y/n :")
+                    if turn_status_input == 'n':
+                        player_turn.remaining_dice = 0
+
+                else:
+                    print(f"=> You lose this turn and a potential to score {player_turn.total_potential_loss}")
 
 
 
 
+                # if not game.DEBUG:
+                #     continuer = input("Continue ? y/n")
+                # else:
+                #     continuer = random.choice(['y', 'n'])
 
                 player_turn.remaining_dice -= 1
-
-
-
-
-
-
-
 
         player_1.winner = True
 

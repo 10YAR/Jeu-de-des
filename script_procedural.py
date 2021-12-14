@@ -121,6 +121,13 @@ while not WINNER:
                     continuer = input("Continue ? y/n")
                 else:
                     continuer = random.choice(['y', 'n'])
+            elif REMAINING[i] == 0 and myPoints > 0:
+                print("=> You win this turn, scoring " + str(potentialScore) + " pts")
+                SCORING_TURNS.append(potentialScore)
+                if potentialScore > MAX_TURN_SCORING[1]:
+                    MAX_TURN_SCORING[1] = potentialScore
+                    MAX_TURN_SCORING[0] = PLAYERS[i]
+                SCORES[i] += potentialScore
             else:
                 print("=> You lose this turn and a potential to score " + str(potentialScore) + " pts")
                 NON_SCORING_TURNS.append(potentialScore)
@@ -138,7 +145,6 @@ while not WINNER:
             if potentialScore > MAX_TURN_SCORING[1]:
                 MAX_TURN_SCORING[1] = potentialScore
                 MAX_TURN_SCORING[0] = PLAYERS[i]
-
             SCORES[i] += potentialScore
 
         if SCORES[i] > DEFAULT_TARGET_SCORE:

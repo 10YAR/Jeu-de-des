@@ -17,7 +17,7 @@ BONUS_VALUE_FOR_NORMAL_BONUS = 100
 # Multiplicateur de points pour un ACE
 BONUS_VALUE_FOR_ACE_BONUS = 1000
 # Liste des joueurs
-PLAYERS = ["Diyar", "Angelina"]
+PLAYERS = ["Romain", "François", "Stéphane", "Laurent", "Christophe", "Isabelle", "Sylvie"]
 # Scores des joueurs
 SCORES = [0] * len(PLAYERS)
 # Dés restants des joueurs

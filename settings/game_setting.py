@@ -6,7 +6,7 @@ class GameSetting:
     # Nombre de faces des dés
     NB_DICE_FACES = 6
 
-    # Nombre de dés jetés
+    # Nombre de dés a jeter
     NB_DICE_ROLLS = 3
 
     # Chiffres gagnants du dés
@@ -44,6 +44,13 @@ class GameSetting:
 
     # Debug
     DEBUG = True
+
+    def add_turn(self):
+        self.TURNS += 1
+        return self.TURNS
+
+    def get_player_length(self):
+        return len(self.PLAYERS)
 
     def add_players(self, *players):
         """The function adds players to the game.

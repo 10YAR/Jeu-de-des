@@ -34,9 +34,13 @@ WINNER = False
 TURNS = 0
 # Score maximum réalisé dans un tour par un joueur
 MAX_TURN_SCORING = ["", 0]
+# Liste des lancés scorants
+SCORING_TURNS = []
+# Liste des lancés non scorants
+NON_SCORING_TURNS = []
 
 # Debug
-DEBUG = False
+DEBUG = True
 
 def roll_dice_set(nb_dice_rolls):
     rolls = [0] * NB_DICE_FACES
@@ -119,6 +123,7 @@ while not WINNER:
                     continuer = random.choice(['y', 'n'])
             else:
                 print("=> You lose this turn and a potential to score " + str(potentialScore) + " pts")
+                NON_SCORING_TURNS.append(potentialScore)
                 TOTAL_POTENTIAL_LOSS[i] += potentialScore
                 potentialScore = 0
                 continuer = 'n'
@@ -129,6 +134,7 @@ while not WINNER:
 
         if potentialScore > 0:
             print("=> You win this turn, scoring " + str(potentialScore) + " pts")
+            SCORING_TURNS.append(potentialScore)
             if potentialScore > MAX_TURN_SCORING[1]:
                 MAX_TURN_SCORING[1] = potentialScore
                 MAX_TURN_SCORING[0] = PLAYERS[i]
@@ -155,3 +161,6 @@ for i in range(len(PLAYERS)):
 print("\nMax turn scoring : " + str(MAX_TURN_SCORING[0]) + " with " + str(MAX_TURN_SCORING[1]) + " pts")
 print("Longest turn : " + str(PLAYERS[TOTAL_ROLLS.index(max(TOTAL_ROLLS))]) + " with " + str(max(TOTAL_ROLLS)) + " rolls")
 print("Max turn loss : " + str(PLAYERS[TOTAL_POTENTIAL_LOSS.index(max(TOTAL_POTENTIAL_LOSS))]) + " with " + str(max(TOTAL_POTENTIAL_LOSS)) + " pts")
+
+print("\nMean scoring turn : " + str(round(sum(SCORING_TURNS) / len(SCORING_TURNS), 2)) + " (" + str(len(SCORING_TURNS)) + " turns)")
+print("Mean non scoring turn : " + str(round(sum(NON_SCORING_TURNS) / len(NON_SCORING_TURNS), 2)) + " (" + str(len(NON_SCORING_TURNS)) + " turns)")

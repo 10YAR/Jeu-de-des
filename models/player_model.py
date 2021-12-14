@@ -14,5 +14,7 @@ class PlayerModel:
     # Pertes de points de chaque joueurs
     total_potential_loss = 0
 
+    winner = False
+
     def __init__(self, name):
         self.name = name

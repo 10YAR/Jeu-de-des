@@ -6,12 +6,9 @@ def main():
     game = GameSetting()
 
     player_1 = PlayerModel('Jean')
+    player_2 = PlayerModel('Romain')
 
-    # game.PLAYERS.append(player_1)
-
-    game.add_players(player_1)
-    print(game.PLAYERS)
-    print(type(game.PLAYERS))
+    game.add_players(player_1, player_2)
 
 
 main()

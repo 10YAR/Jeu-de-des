@@ -1,5 +1,6 @@
 class GameSetting:
     # Score à atteindre
+
     DEFAULT_TARGET_SCORE = 2000
 
     # Nombre de faces des dés
@@ -45,4 +46,26 @@ class GameSetting:
     DEBUG = True
 
     def add_players(self, *players):
+        """The function adds players to the game.
+
+            Parameters
+            ----------
+            players : PlayerModel
+                Player model entity
+        """
         self.PLAYERS = players
+
+    def get_player_winner(self):
+        """The function checks if a player wins the game.
+
+            Returns
+            -------
+            PlayerModel
+            The game winner
+            -------
+            Boolean<false>
+        """
+        for player in self.PLAYERS:
+            if player.winner:
+                return player
+        return False

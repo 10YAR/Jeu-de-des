@@ -155,6 +155,7 @@ while not WINNER:
 
         if SCORES[i] > DEFAULT_TARGET_SCORE:
             WINNER = i
+            break
 
         totalScores = "Total scores :"
         for n in range(len(PLAYERS)):

@@ -36,7 +36,7 @@ TURNS = 0
 MAX_TURN_SCORING = ["", 0]
 
 # Debug
-DEBUG = True
+DEBUG = False
 
 def roll_dice_set(nb_dice_rolls):
     rolls = [0] * NB_DICE_FACES

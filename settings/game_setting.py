@@ -42,6 +42,8 @@ class GameSetting:
     # Debug
     DEBUG = True
 
+    PLAYER_TURN = None
+
     def add_turn(self):
         self.TURNS += 1
         return self.TURNS
@@ -59,6 +61,9 @@ class GameSetting:
         """
         self.PLAYERS = players
 
+        if self.get_player_length() > 0:
+            self.PLAYER_TURN = self.PLAYERS[0]
+
     def get_player_winner(self):
         """The function checks if a player wins the game.
 
@@ -73,3 +78,9 @@ class GameSetting:
             if player.winner:
                 return player
         return False
+
+    def get_player_turn(self):
+
+        self.PLAYER_TURN.remaining_dice = self.NB_DICE_ROLLS
+
+        return self.PLAYER_TURN

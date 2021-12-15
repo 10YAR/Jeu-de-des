@@ -100,6 +100,9 @@ while not WINNER:
     TURNS += 1
     i = 0
     REMAINING = [NB_DICE_ROLLS] * len(PLAYERS)
+
+    # LANCE POUR CHAQUE JOUEUR POUR UN TOUR
+
     for i in range(len(PLAYERS)):
         print("\nTurn #" + str(TURNS) + " --> " + PLAYERS[i] + " score: " + str(SCORES[i]))
         continuer = 'y'

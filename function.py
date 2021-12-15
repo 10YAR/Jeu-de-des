@@ -33,13 +33,20 @@ def set_player():
         a dictionnary of player and their number of roll in the game 
     """
     nb_player = int(input('How many player ?'))
-    player_dict = {}
-    roll_dict = {}
+    players_list = []
+    player_score_list = []
     for index in range(nb_player):
+        player_dict = {}
         player_name = input('Name of player ' + str(index+1) + ' ')
-        player_dict[player_name] = 0
-        roll_dict[player_name] = 0
-    return player_dict, roll_dict
+        player_dict['name'] = player_name
+        player_dict['score'] = 0
+        player_dict['roll'] = 0
+        player_dict['full-roll'] = 0
+        player_dict['bonus'] = 0
+        player_dict['potential lost'] = 0
+        players_list.append(player_dict)
+        player_score_list.append(player_dict['score'])
+    return players_list, player_score_list
 
 
 def roll_dice_set(nb_dice_to_roll):
@@ -66,7 +73,7 @@ def roll_dice_set(nb_dice_to_roll):
 
 
 def analyse_bonus_score(dice_value_occurrence_list):
-    """Analyse the if the player scored bonus points on his launch
+    """Analyse the bonus score, if the player scored bonus points on his launch
 
     Parameters
 
@@ -77,6 +84,10 @@ def analyse_bonus_score(dice_value_occurrence_list):
     Returns
 
     -------
+    integer
+        all the bonus point the player win with his roll
+    list
+        A list of all the tuple(number of winning dice, the winning side value) that make the player win bonus point.
     list
        list of all the occurence for each side of the dice which's appears on the player launch minus those which's appears 3 times
 
@@ -101,6 +112,25 @@ def analyse_bonus_score(dice_value_occurrence_list):
 
 
 def analyse_standard_score(dice_value_occurrence_list):
+    """Analyse the standard score if the player scored standard points on his launch
+
+    Parameters
+
+    ----------
+    dice_value_occurence_list: list
+        list of all the occurence for each side of the dice which's appears on the player launch
+
+    Returns
+
+    -------
+    integer
+        all the standard point the player win with his roll
+    tuple
+        A tuple of the number of winning dice and the winning side value  
+    list
+       list of all the occurence for each side of the dices which's appears on the player launch minus those which's give him standard points
+
+    """
     score_standard = 0
     standard_winning_tuple = ()
     standard_winning_tuple_list = []
@@ -114,46 +144,119 @@ def analyse_standard_score(dice_value_occurrence_list):
         dice_value_occurrence_list[scoring_value-1] = 0
     return score_standard, standard_winning_tuple_list, dice_value_occurrence_list,
 
+def handle_tuple_exception(bonus_winning_tuple_list,standard_winning_tuple_list, nb_dice_to_roll, dice_value_occurence_list, bonus_win_by_player ):
+    """Handle the returns if the list receive by analyse_bonus_score() and analyse_standard_score() exist
 
-def analyse_score(dice_value_occurence_list, nb_dice_to_roll):
-    bonus_score, bonus_winning_tuple_list, dice_value_occurence_list, = analyse_bonus_score(
-        dice_value_occurence_list)
-    standard_score, standard_winning_tuple_list, dice_value_occurence_list, = analyse_standard_score(
-        dice_value_occurence_list)
+    Parameters
+
+    ----------
+    bonus_winning_tuple_list : list
+        A list of all the tuple(number of winning dice, the winning side value) that make the player win bonus point. 
+    
+    standard_winning_tuple_list : list
+        A list of all the tuple(number of winning dice, the winning side value) that make the player win standard point.
+    
+    nb_dice_to_roll : integer
+        The number of remaining dice to roll
+
+    dice_value_occurence_list : list
+        List of all the occurence for each side of the dice which's appears on the player launch minus those which's make him win
+    
+    bonus_win_by_player : integer
+        Number of bonus the player win during the game
+    
+    Returns
+
+    -------
+
+    Integer
+        number of dice winning
+    Integer
+        The number of remaining dice to roll
+    List
+        List of tuple(number of winning dice, the winning side value) 
+    Integer
+        Number of bonus the player win during the game 
+
+
+    """
     nb_winning_dice = nb_dice_to_roll - sum(dice_value_occurence_list)
     if nb_winning_dice > 0:
         nb_dice_to_roll = sum(dice_value_occurence_list)
+    elif nb_winning_dice == 5:
+        nb_dice_to_roll =5
     else:
         nb_dice_to_roll = 0
     if not bonus_winning_tuple_list:
-        return bonus_score + standard_score, nb_winning_dice, nb_dice_to_roll, standard_winning_tuple_list
+        return nb_winning_dice, nb_dice_to_roll, standard_winning_tuple_list,bonus_win_by_player
     elif not standard_winning_tuple_list:
-        return bonus_score + standard_score, nb_winning_dice, nb_dice_to_roll, bonus_winning_tuple_list
+        bonus_win_by_player += len(bonus_winning_tuple_list)
+        return nb_winning_dice, nb_dice_to_roll, bonus_winning_tuple_list,bonus_win_by_player
     elif not standard_winning_tuple_list and not bonus_winning_tuple_list:
-        return bonus_score + standard_score, nb_winning_dice, nb_dice_to_roll, bonus_winning_tuple_list
+        return nb_winning_dice, nb_dice_to_roll, bonus_winning_tuple_list,bonus_win_by_player
     else:
+        bonus_win_by_player += len(bonus_winning_tuple_list)
         for bonus_tuple_value, standard_tuple_value in zip(bonus_winning_tuple_list, standard_winning_tuple_list):
             winning_tuple_list = []
             winning_tuple_list.append(standard_tuple_value)
             winning_tuple_list.append(bonus_tuple_value)
-        return bonus_score + standard_score, nb_winning_dice, nb_dice_to_roll, winning_tuple_list
+        return nb_winning_dice, nb_dice_to_roll, winning_tuple_list,bonus_win_by_player
+
+def analyse_score(dice_value_occurence_list, nb_dice_to_roll, bonus_win_by_player):
+    """Analyse if the player scored and his total score
+
+    Parameters
+
+    ----------
+    dice_value_occurence_list: list
+        list of all the occurence for each side of the dice which's appears on the player launch
+
+    Returns
+
+    -------
+    integer
+        the total point the player win with his roll
+    tuple
+        A tuple of the number of winning dice and the winning side value  
+    list
+       list of all the occurence that did not give him point
+
+    """
+    bonus_score, bonus_winning_tuple_list, dice_value_occurence_list, = analyse_bonus_score(
+        dice_value_occurence_list)
+    standard_score, standard_winning_tuple_list, dice_value_occurence_list, = analyse_standard_score(
+        dice_value_occurence_list)  
+    nb_winning_dice, nb_dice_to_roll, winning_tuple_list,bonus_win_by_player = handle_tuple_exception(bonus_winning_tuple_list,standard_winning_tuple_list, nb_dice_to_roll,dice_value_occurence_list, bonus_win_by_player)
+    return  bonus_score + standard_score,nb_winning_dice, nb_dice_to_roll, winning_tuple_list,bonus_win_by_player
+    
 
 
-def analyse_game(player_dict, winner_name, turn, roll_dict):
-    player_dict_key_list = list(player_dict)
-    player_dict_values = player_dict.values()
-    roll_dict_values = player_dict.values()
-    roll_dict_values_list = list(roll_dict_values)
-    player_dict_values_list = list(player_dict_values)
-    winner_score = player_dict_values_list.pop(player_dict_key_list.index(winner_name))
-    winner_name = player_dict_key_list.pop(player_dict_key_list.index(winner_name))
-    winner_roll = roll_dict_values_list.pop(player_dict_key_list.index(winner_name))
-    print('{} win ! scoring  {} in {} roll'
-        .format(winner_name,winner_score, winner_roll)
-    )
-    if len(player_dict_key_list) >= 1:
-        print('\nGame in %s turns' %(turn))
-        for index in range(len(player_dict_key_list)):
-            print('{} lose ! scoring {} in {} roll' 
-                .format(player_dict_key_list[index], player_dict_values_list[index], roll_dict_values_list[index])
+def player_stat_analyse(players_list, winner_name, turn, turn_stat_dict, total_turn, loosing_turn):
+    total_score = 0
+    total_potential_lost = 0
+    scoring_turn = total_turn - loosing_turn
+    print('\nGame in %s turns' %(turn))
+    players_list_sorted_by_score = sorted(players_list, key=lambda x: x['score'], reverse=True)
+    for player in players_list_sorted_by_score:
+        total_score += player['score']
+        total_potential_lost += player['potential lost']
+        if player['name'] == winner_name:
+            print('{} win ! scoring  {} in {} roll with {} full roll, {} bonus and {} potential points lost'
+                .format(player['name'],player['score'],player['roll'], player['full-roll'], player['bonus'],player['potential lost'] )
             )
+        else: 
+            print('{} loose ! scoring  {} in {} roll with {} full roll, {} bonus and {} potential points lost'
+                .format(player['name'],player['score'],player['roll'], player['full-roll'], player['bonus'],player['potential lost'] )
+            )
+    turn_stat_analyse(turn_stat_dict)
+    mean_scoring_turn = round(total_score/scoring_turn,2)
+    mean_non_scoring_turn = round(total_potential_lost/loosing_turn,2)
+    print('\nMean scoring turn : {} ({} turns)\nMean non scoring turn : {} ({} turns)'
+        .format(mean_scoring_turn,scoring_turn, mean_non_scoring_turn, loosing_turn)
+    )
+
+
+def turn_stat_analyse(turn_stat_dict):
+    print('\nMax turn scoring : {} with {} \nLongest turn : {} with {} roll \nMax turn loss : {} with {}'
+        .format(turn_stat_dict['max_turn_scoring'][1],turn_stat_dict['max_turn_scoring'][0],turn_stat_dict['longest_turn'][1], turn_stat_dict['longest_turn'][0], turn_stat_dict['max_turn_loss'][1], turn_stat_dict['max_turn_loss'][0]  )
+    )

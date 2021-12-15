@@ -16,8 +16,11 @@ class PlayerModel:
 
     winner = False
 
+    TURN_LIST = []
+
     def __init__(self, name):
         self.name = name
 
-    def get_player_turns_done(self, points_turn):
-        return self.remaining_dice > 0 and points_turn > 0
+    def set_last_turn_done(self):
+        turn_last = self.TURN_LIST[-1]
+        turn_last.TURN_DONE = True

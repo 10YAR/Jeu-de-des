@@ -1,55 +1,28 @@
+from methods.turn_method import TurnMethod
+
+
 class GameSetting:
-    # Score à atteindre
-
-    DEFAULT_TARGET_SCORE = 2000
-
     # Nombre de dés a jeter
-    NB_DICE_ROLLS = 3
+    NB_DICE_ROLLS = 5
 
-    # Chiffres gagnants du dés
-    LIST_SCORING_DICE_VALUE = [1, 5]
+    # Players list
+    PLAYERS_LIST = []
 
-    # Points associés aux chiffres gagnants du dés
-    LIST_SCORING_MULTIPLIER = [100, 50]
-
-    # Nombre d'occurences pour déclencher le bonus
-    TRIGGER_OCCURRENCE_FOR_BONUS = 3
-
-    # Multiplicateur de points pour un bonus classique
-    BONUS_VALUE_FOR_NORMAL_BONUS = 100
-
-    # Multiplicateur de points pour un ACE
-    BONUS_VALUE_FOR_ACE_BONUS = 1000
-
-    # Liste des joueurs
-    PLAYERS = []
-
-    # Booléen gagnant
-    WINNER = False
+    #  Scores list
+    SCORES_LIST = []
 
     # Nombre de tours réalisés
-    TURNS = 0
-
-    # Score maximum réalisé dans un tour par un joueur
-    MAX_TURN_SCORING = ["", 0]
-
-    # Liste des lancés scorants
-    SCORING_TURNS = []
-
-    # Liste des lancés non scorants
-    NON_SCORING_TURNS = []
+    TURNS = 1
 
     # Debug
     DEBUG = True
-
-    PLAYER_TURN = None
 
     def add_turn(self):
         self.TURNS += 1
         return self.TURNS
 
     def get_player_length(self):
-        return len(self.PLAYERS)
+        return len(self.PLAYERS_LIST)
 
     def add_players(self, *players):
         """The function adds players to the game.
@@ -59,10 +32,14 @@ class GameSetting:
             players : PlayerModel
                 Player model entity
         """
-        self.PLAYERS = players
+        for player in players:
+            turn_method = TurnMethod(self.TURNS, self.NB_DICE_ROLLS)
+            player.TURN_LIST.append(turn_method)
 
-        if self.get_player_length() > 0:
-            self.PLAYER_TURN = self.PLAYERS[0]
+        self.PLAYERS_LIST = players
+
+    def add_scores(self, *scores):
+        self.SCORES_LIST = scores
 
     def get_player_winner(self):
         """The function checks if a player wins the game.
@@ -74,13 +51,26 @@ class GameSetting:
             -------
             Boolean<false>
         """
-        for player in self.PLAYERS:
+        for player in self.PLAYERS_LIST:
             if player.winner:
                 return player
         return False
 
     def get_player_turn(self):
+        for player in self.PLAYERS_LIST:
+            turn_last = player.TURN_LIST[-1]
+            print(player.name, turn_last.TURN, turn_last.TURN_DONE, turn_last)
+            print('-----')
 
-        self.PLAYER_TURN.remaining_dice = self.NB_DICE_ROLLS
+            if not turn_last.TURN_DONE and turn_last.TURN == self.TURNS:
+                return player
 
-        return self.PLAYER_TURN
+        self.set_new_turn()
+        return self.PLAYERS_LIST[0]
+
+    def set_new_turn(self):
+        new_turn_value = self.add_turn()
+
+        for player in self.PLAYERS_LIST:
+            turn_method = TurnMethod(new_turn_value, self.NB_DICE_ROLLS)
+            player.TURN_LIST.append(turn_method)

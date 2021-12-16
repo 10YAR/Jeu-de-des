@@ -2,6 +2,31 @@ from methods import statsMethods, scoreMethods, rollMethods, playerMethods
 import gameConfig, utils
 
 def play(turn_stat_dict, total_turn, turn, loosing_turn):
+    """The Loop game, while any player hit he target score roll the dice 
+
+    Parameters
+
+    ----------
+
+    turn_stat_dict : Dictionnary
+        A dictionnary of the max scoring turn, the longest turn and the max turn loss
+    
+    total_turn : Integer
+        the total number of turn played use for the calcul of the mean scoring turn and the mean non scoring turn
+    
+    turn : Integer
+        the actual turn 
+    
+    loosing_turn : Integer
+        the total number of turn where players loose point
+
+    Returns
+
+    -------
+
+    None
+    
+    """
     we_have_a_winner = False
     players_list, player_score_list = playerMethods.set_player()
     while we_have_a_winner == False:
@@ -33,6 +58,34 @@ def play(turn_stat_dict, total_turn, turn, loosing_turn):
 
 
 def game_over(turn_stat_dict, players_list,turn, total_turn, loosing_turn, player):
+    """Verify if we have a winner 
+
+    Parameters
+
+    ----------
+    turn_stat_dict : Dictionnary
+        A dictionnary of the max scoring turn, the longest turn and the max turn loss
+
+    players_list : List
+        a List of dictionnary foreach player with their name, score, number of roll, number of full-roll, number of bonus and potential lost
+    
+    total_turn : Integer
+        the total number of turn played use for the calcul of the mean scoring turn and the mean non scoring turn
+    
+    turn : Integer
+        the actual turn 
+    
+    loosing_turn : Integer
+        the total number of turn where players loose point
+    
+    Returns
+
+    -------
+
+    Boolean
+        True if we have a winner, False otherwise
+
+    """
     if player['score'] >= gameConfig.DEFAULT_TARGET_SCORE:
         statsMethods.player_stat_analyse(
         players_list,player['name'], turn, turn_stat_dict, total_turn, loosing_turn)

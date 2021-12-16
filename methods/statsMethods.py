@@ -1,4 +1,27 @@
 def player_stat_analyse(players_list, winner_name, turn, turn_stat_dict, total_turn, loosing_turn):
+    """Analyse the stats for all the player 
+    
+    Parameters
+    ----------
+    players_list : List 
+        a List of dictionnary foreach player with their name, score, number of roll, number of full-roll, number of bonus and potential lost
+    winner_name : string
+        The name of the player who win the game
+    turn : Integer
+        the last turn played
+    turn_stat_dict : Dictionnary
+        A dictionnary of the max scoring turn, the longest turn and the max turn loss
+    total_turn : Integer
+        the total number of turn played use for the calcul of the mean scoring turn and the mean non scoring turn
+    loosing_turn : Integer
+        the total number of turn where players loose point
+    
+    Returns
+    -------
+
+    None
+    
+    """
     total_score = 0
     total_potential_lost = 0
     scoring_turn = total_turn - loosing_turn
@@ -25,16 +48,60 @@ def player_stat_analyse(players_list, winner_name, turn, turn_stat_dict, total_t
     )
 
 def max_scoring_turn_analyse(turn_stat_dict, player_turn_score,player):
+    """Take the maximum score in one turn
+    Parameters
+    ----------
+    turn_stat_dict : Dictionnary
+        A dictionnary of the max scoring turn, the longest turn and the max turn loss
+    player_turn_score : Integer
+        the score the player scored during this turn
+    player : Dictionnary
+        All the data of the player who hit the full-roll(name, score, number of roll, number of full-roll, number of bonus and potential lost)
+    
+    Returns
+    -------
+    None
+    
+
+    """
     if player_turn_score >= turn_stat_dict['max_turn_scoring'][0]:
         turn_stat_dict['max_turn_scoring'][0] = player_turn_score
         turn_stat_dict['max_turn_scoring'][1] = player['name']
 
 def max_turn_loss_analyse(turn_stat_dict, player_turn_score,player): 
+    """take the maximum score lost in one turn
+     Parameters
+    ----------
+    turn_stat_dict : Dictionnary
+        A dictionnary of the max scoring turn, the longest turn and the max turn loss
+    player_turn_score : Integer
+        the score the player scored during this turn
+    player : Dictionnary
+        All the data of the player who hit the full-roll(name, score, number of roll, number of full-roll, number of bonus and potential lost)
+    
+    Returns
+    -------
+    None
+    """
     if player_turn_score > turn_stat_dict['max_turn_loss'][0]:
         turn_stat_dict['max_turn_loss'][0] = player_turn_score
         turn_stat_dict['max_turn_loss'][1] = player['name']
 
 def longest_turn_analyse(turn_stat_dict, roll, player):
+    """Set the longest turn play by a player
+    Parameters
+    ----------
+    turn_stat_dict : Dictionnary
+        A dictionnary of the max scoring turn, the longest turn and the max turn loss
+    roll : Integer
+        the number of roll by the player in this turn
+    player : Dictionnary
+        All the data of the player who hit the full-roll(name, score, number of roll, number of full-roll, number of bonus and potential lost)
+    
+    Returns
+    -------
+    None
+    """
     if roll > turn_stat_dict['longest_turn'][0]:
         turn_stat_dict['longest_turn'][0] = roll
         turn_stat_dict['longest_turn'][1] = player['name']

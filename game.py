@@ -25,28 +25,26 @@ def main():
             print(f"Turn #{game.TURNS} --> {player_turn.name} | score: {player_turn.score}")
 
         rolls = dice_model.get_rolls_dice(turn_selected.NB_DICE_ROLLS)
-        score, dice_sorted, dice_result_sorted = game.calculate_score(dice_model.NB_DICE_FACES, rolls)
 
-        # print(f"score: {score}, dice_sorted: {dice_sorted}")
+        score, dice_sorted, dice_result_sorted = game.calculate_score(dice_model.NB_DICE_FACES, rolls)
 
         turn_selected.set_roll_done(rolls, score, dice_sorted, dice_result_sorted)
         turn_selected.get_roll_result()
+        turn_selected.get_turn_next_roll_logic()
 
-        # roll  # 1 : 2 scoring dices [(1, 1), (1, 5)] scoring 150, potential total turn score 150, remaining dice to roll : 3
+        game.get_players_dashboard()
 
-        # roll_done.
+        print('END LOGIC')
 
-        # print(turn_selected.ROLL_LIST)
+        # print('===========================')
 
-        print('===========================+')
-
-        if turn_selected.ROLL > 2:
-            player_turn.set_last_turn_done()
-
-        turn_selected.add_roll()
-
-        if game.TURNS == 2:
-            player_1.winner = True
+        # if turn_selected.ROLL > 2:
+        #     player_turn.set_last_turn_done()
+        #
+        # turn_selected.add_roll()
+        #
+        # if game.TURNS == 2:
+        #     player_1.winner = True
 
 
 main()

@@ -16,6 +16,14 @@ class GameModel(GameSetting):
     def get_player_length(self):
         return len(self.PLAYERS_LIST)
 
+    def get_players_dashboard(self):
+        for player in self.PLAYERS_LIST:
+            print('====================')
+            print(player.name)
+            player.get_player_total_score()
+            print('====================')
+        # self.PLAYERS_LIST[0].get_player_total_score()
+
     def add_players(self, *players):
         """The function adds players to the game.
 

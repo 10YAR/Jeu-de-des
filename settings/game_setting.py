@@ -83,19 +83,19 @@ class GameSetting:
             player.TURN_LIST = player.TURN_LIST[:]
 
     def calculate_score(self, dice_face, rolls):
-
         score = 0
+        dice_sorted = 0
 
         for face in range(dice_face):
-            print(face)
-
             for score_bonus in self.SCORES_LIST:
                 if face == (score_bonus.WINNER_FIGURE_VALUE - 1):
-                    print(f"rolls: {rolls[face]}, face: {face}, figure mult: {score_bonus.WINNER_FIGURE_VALUE}")
+                    # print(f"rolls: {rolls[face]}, WINNER_FIGURE_VALUE: {score_bonus.WINNER_FIGURE_VALUE},face: {face}, figure mult: {score_bonus.WINNER_FIGURE_MULTIPLIER}")
 
                     if rolls[face] >= self.TRIGGER_OCCURRENCE_FOR_BONUS:
                         score += self.BONUS_VALUE_FOR_ACE_BONUS
-                    elif rolls[face] == score_bonus.WINNER_FIGURE_MULTIPLIER:
-                        print('OKKKK')
+                    else:
+                        score += (score_bonus.WINNER_FIGURE_MULTIPLIER * rolls[face])
 
-        print(f"score: {score}")
+                    dice_sorted += rolls[face]
+
+        return score, dice_sorted

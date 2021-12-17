@@ -72,6 +72,9 @@ class TurnMethod:
 
         if last_roll.SCORE <= 0:
             print(f"You lose this turn and a potential to score {score_turn} pts.")
+
+            # TODO Si il loose supprimer le score du tour selectionner
+
             self.set_turn_done()
 
         else:

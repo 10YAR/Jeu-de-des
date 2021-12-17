@@ -40,4 +40,7 @@ class PlayerModel(GameSetting):
             score_turn = turn.get_turn_score()
             self.score += score_turn
 
+        if self.score >= self.DEFAULT_TARGET_SCORE:
+            self.winner = True
+
         return self.score

@@ -34,5 +34,7 @@ def main():
 
         game.get_players_dashboard(turn_selected)
 
+    print(game.get_player_winner())
 
 main()
+

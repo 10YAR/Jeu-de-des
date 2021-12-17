@@ -16,14 +16,13 @@ class GameModel(GameSetting):
         return len(self.PLAYERS_LIST)
 
     def get_players_dashboard(self, turn_selected):
-        if turn_selected.TURN_DONE:
+        total_scores_dashboard = "Total scores: "
+        for player in self.PLAYERS_LIST:
+            score = player.get_player_total_score()
+            total_scores_dashboard += f"{player.name} --> {score} "
 
-            print("\n")
-            total_scores_dashboard = "Total scores: "
-            for player in self.PLAYERS_LIST:
-                score = player.get_player_total_score()
-                total_scores_dashboard += f"{player.name} --> {score} "
-            print(total_scores_dashboard, "\n")
+        if turn_selected.TURN_DONE:
+            print("\n", total_scores_dashboard, "\n")
 
     def add_players(self, *players):
         """The function adds players to the game.

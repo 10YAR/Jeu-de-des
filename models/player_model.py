@@ -20,11 +20,10 @@ class PlayerModel(GameSetting):
 
     winner = False
 
-    TURN_LIST = []
-
     def __init__(self, name):
         GameSetting.__init__(self)
         self.name = name
+        self.TURN_LIST = []
 
     def set_last_turn_done(self):
         turn_last = self.TURN_LIST[-1]
@@ -33,18 +32,12 @@ class PlayerModel(GameSetting):
     def add_turn_self_player(self, new_turn_value):
         turn_method = TurnMethod(new_turn_value, GameSetting.NB_DICE_ROLLS)
         self.TURN_LIST.append(turn_method)
-        self.TURN_LIST = self.TURN_LIST[:]
 
     def get_player_total_score(self):
-        score = 0
+        self.score = 0
 
-        print(f"---- TURN_LIST: {len(self.TURN_LIST)}")
+        for turn in self.TURN_LIST:
+            score_turn = turn.get_turn_score()
+            self.score += score_turn
 
-        # for turn in self.TURN_LIST:
-        #     score_turn = turn.get_turn_score()
-        #
-        #     print("score_turn", score_turn)
-        #     score += score_turn
-
-        print(f"---- TURN_LIST: {len(self.TURN_LIST)}")
-        print(f"score {score}")
+        return self.score

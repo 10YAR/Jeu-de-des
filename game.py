@@ -32,19 +32,7 @@ def main():
         turn_selected.get_roll_result()
         turn_selected.get_turn_next_roll_logic()
 
-        game.get_players_dashboard()
-
-        print('END LOGIC')
-
-        # print('===========================')
-
-        # if turn_selected.ROLL > 2:
-        #     player_turn.set_last_turn_done()
-        #
-        # turn_selected.add_roll()
-        #
-        # if game.TURNS == 2:
-        #     player_1.winner = True
+        game.get_players_dashboard(turn_selected)
 
 
 main()

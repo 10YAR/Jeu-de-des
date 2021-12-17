@@ -6,13 +6,13 @@ class TurnMethod:
     TURN_DONE = False
 
     ROLL = 0
-    ROLL_LIST = []
 
     NB_DICE_ROLLS = 0
 
     def __init__(self, turn, nb_dice_rolls):
         self.TURN = turn
         self.NB_DICE_ROLLS = nb_dice_rolls
+        self.ROLL_LIST = []
 
     def set_roll_done(self, rolls, score, dice_sorted, dice_result_sorted):
         self.NB_DICE_ROLLS -= dice_sorted
@@ -86,5 +86,3 @@ class TurnMethod:
 
             else:
                 print(f"You win this turn, scoring {score_turn} pts")
-
-        print("\n")

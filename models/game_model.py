@@ -3,11 +3,10 @@ from settings.game_setting import GameSetting
 
 
 class GameModel(GameSetting):
-    # Players list
-    PLAYERS_LIST = []
 
-    #  Scores list
-    SCORES_LIST = []
+    def __init__(self):
+        self.PLAYERS_LIST = []
+        self.SCORES_LIST = []
 
     def add_turn(self):
         self.TURNS += 1
@@ -16,13 +15,15 @@ class GameModel(GameSetting):
     def get_player_length(self):
         return len(self.PLAYERS_LIST)
 
-    def get_players_dashboard(self):
-        for player in self.PLAYERS_LIST:
-            print('====================')
-            print(player.name)
-            player.get_player_total_score()
-            print('====================')
-        # self.PLAYERS_LIST[0].get_player_total_score()
+    def get_players_dashboard(self, turn_selected):
+        if turn_selected.TURN_DONE:
+
+            print("\n")
+            total_scores_dashboard = "Total scores: "
+            for player in self.PLAYERS_LIST:
+                score = player.get_player_total_score()
+                total_scores_dashboard += f"{player.name} --> {score} "
+            print(total_scores_dashboard, "\n")
 
     def add_players(self, *players):
         """The function adds players to the game.

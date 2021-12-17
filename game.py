@@ -25,13 +25,18 @@ def main():
             print(f"Turn #{game.TURNS} --> {player_turn.name} | score: {player_turn.score}")
 
         rolls = dice_model.get_rolls_dice(turn_selected.NB_DICE_ROLLS)
-        print(rolls)
-
         score, dice_sorted = game.calculate_score(dice_model.NB_DICE_FACES, rolls)
 
-        print(f"score: {score}, dice_sorted: {dice_sorted}")
+        # print(f"score: {score}, dice_sorted: {dice_sorted}")
 
-        roll_done = turn_selected.set_roll_done(rolls, score)
+        turn_selected.set_roll_done(rolls, score, dice_sorted)
+        turn_selected.get_roll_result()
+
+
+
+
+        # roll  # 1 : 2 scoring dices [(1, 1), (1, 5)] scoring 150, potential total turn score 150, remaining dice to roll : 3
+
 
         # roll_done.
 

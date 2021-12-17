@@ -1,4 +1,6 @@
 from methods.roll_method import RollMethod
+# from settings.game_setting import GameSetting
+
 
 class TurnMethod:
     TURN = None
@@ -8,6 +10,8 @@ class TurnMethod:
     ROLL_LIST = []
 
     def __init__(self, turn, nb_dice_rolls):
+        # GameSetting.__init__(self)
+
         self.TURN = turn
         self.NB_DICE_ROLLS = nb_dice_rolls
 

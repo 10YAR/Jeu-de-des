@@ -17,6 +17,18 @@ class GameSetting:
     # Debug
     DEBUG = True
 
+    # Score à atteindre
+    DEFAULT_TARGET_SCORE = 2000
+
+    # Nombre d'occurences pour déclencher le bonus
+    TRIGGER_OCCURRENCE_FOR_BONUS = 3
+
+    # Multiplicateur de points pour un bonus classique
+    BONUS_VALUE_FOR_NORMAL_BONUS = 100
+
+    # Multiplicateur de points pour un ACE
+    BONUS_VALUE_FOR_ACE_BONUS = 1000
+
     def add_turn(self):
         self.TURNS += 1
         return self.TURNS
@@ -69,3 +81,21 @@ class GameSetting:
             turn_method = TurnMethod(new_turn_value, self.NB_DICE_ROLLS)
             player.TURN_LIST.append(turn_method)
             player.TURN_LIST = player.TURN_LIST[:]
+
+    def calculate_score(self, dice_face, rolls):
+
+        score = 0
+
+        for face in range(dice_face):
+            print(face)
+
+            for score_bonus in self.SCORES_LIST:
+                if face == (score_bonus.WINNER_FIGURE_VALUE - 1):
+                    print(f"rolls: {rolls[face]}, face: {face}, figure mult: {score_bonus.WINNER_FIGURE_VALUE}")
+
+                    if rolls[face] >= self.TRIGGER_OCCURRENCE_FOR_BONUS:
+                        score += self.BONUS_VALUE_FOR_ACE_BONUS
+                    elif rolls[face] == score_bonus.WINNER_FIGURE_MULTIPLIER:
+                        print('OKKKK')
+
+        print(f"score: {score}")

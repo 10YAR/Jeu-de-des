@@ -3,6 +3,7 @@ class TurnMethod:
     TURN_DONE = False
 
     ROLL = 0
+    ROLL_LIST = []
 
     def __init__(self, turn, nb_dice_rolls):
         self.TURN = turn

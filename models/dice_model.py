@@ -6,15 +6,15 @@ class DiceModel:
     NB_DICE_FACES = 6
 
     def get_rolls_dice(self, nb_dice_to_roll):
-        """Launch the dice and set a list with an occurence of each value return by the dice
+        """Launch the dice and set a list with an occurrence of each value return by the dice
         Parameters
         ----------
         nb_dice_to_roll : int
-            the number of dice with have to roll, set at DEFAULT_SIDE_NB
+            the number of dice with have to roll
         Returns
         -------
         list
-            a list with all the occurence for each side dice
+            a list with all the occurrence for each side dice
         """
         dice_value_occurrence_list = [0] * self.NB_DICE_FACES
         for index in range(nb_dice_to_roll):

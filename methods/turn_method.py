@@ -12,8 +12,8 @@ class TurnMethod:
         self.TURN = turn
         self.NB_DICE_ROLLS = nb_dice_rolls
 
-    def set_roll_done(self, rolls, score, dice_sorted):
-        roll_method = RollMethod(rolls, score, dice_sorted)
+    def set_roll_done(self, rolls, score, dice_sorted, dice_result_sorted):
+        roll_method = RollMethod(rolls, score, dice_sorted, dice_result_sorted)
         self.ROLL_LIST.append(roll_method)
         self.ROLL_LIST = self.ROLL_LIST[:]
         return self.ROLL_LIST[-1]
@@ -35,11 +35,20 @@ class TurnMethod:
 
         return score_turn, dice_turn_sorted
 
+    @staticmethod
+    def get_display_roll_scoring_dice(roll_selected):
+        display = ''
+        for idx, dice_result in enumerate(roll_selected.DICE_RESULT_SORTED):
+            display += f"({dice_result.WINNER_FIGURE_VALUE}, {dice_result.DICE_NUMBER})"
+            if idx < (len(roll_selected.DICE_RESULT_SORTED) - 1):
+                display += ', '
+        return display
+
     def get_roll_result(self):
         last_roll = self.get_last_roll()
         score_turn, dice_turn_sorted = self.get_turn_score_and_dice_left()
-
-        # Diminuer la valeur des dés à chaque tour et ensuite lancer les rolls
-        print(self.NB_DICE_ROLLS - dice_turn_sorted)
+        
         print(
-            f"roll #{self.ROLL}: {last_roll.DICE_SORTED} scoring dices [] scoring {last_roll.SCORE}, potential total turn score {score_turn}, remaining dice to roll : {dice_turn_sorted}")
+            f"roll #{self.ROLL}: {last_roll.DICE_SORTED} scoring dices [{self.get_display_roll_scoring_dice(last_roll)}] scoring {last_roll.SCORE}, potential total "
+            f"turn score {score_turn}, remaining dice to roll : {self.NB_DICE_ROLLS - dice_turn_sorted}"
+        )

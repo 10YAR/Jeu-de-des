@@ -1,3 +1,4 @@
+from models.score_model import ScoreModel
 from settings.game_setting import GameSetting
 
 
@@ -62,12 +63,11 @@ class GameModel(GameSetting):
     def calculate_score(self, dice_face, rolls):
         score = 0
         dice_sorted = 0
+        dice_result_sorted = []
 
         for face in range(dice_face):
             for score_bonus in self.SCORES_LIST:
                 if face == (score_bonus.WINNER_FIGURE_VALUE - 1):
-                    # print(f"rolls: {rolls[face]}, WINNER_FIGURE_VALUE: {score_bonus.WINNER_FIGURE_VALUE},face: {face}, figure mult: {score_bonus.WINNER_FIGURE_MULTIPLIER}")
-
                     if rolls[face] >= self.TRIGGER_OCCURRENCE_FOR_BONUS:
                         score += self.BONUS_VALUE_FOR_ACE_BONUS
                     else:
@@ -75,5 +75,11 @@ class GameModel(GameSetting):
 
                     dice_sorted += rolls[face]
 
-        return score, dice_sorted
+        for score_bonus in self.SCORES_LIST:
+            rolls_selected = score_bonus.WINNER_FIGURE_VALUE - 1
+            if rolls[rolls_selected] > 0:
+                score_model = ScoreModel(score_bonus.WINNER_FIGURE_VALUE, rolls[rolls_selected])
+                dice_result_sorted.append(score_model)
+                dice_result_sorted = dice_result_sorted[:]
 
+        return score, dice_sorted, dice_result_sorted

@@ -1,6 +1,4 @@
-import gameConfig
-import utils
-from methods import playerMethods, scoreMethods, statsMethods, gameMethods, rollMethods
+from methods import gameMethods
 
 turn_stat_dict = {'max_turn_scoring':[0,''], 'longest_turn' : [0,''], 'max_turn_loss' : [0,'']}
 total_turn = 0

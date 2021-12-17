@@ -90,4 +90,5 @@ def game_over(turn_stat_dict, players_list,turn, total_turn, loosing_turn, playe
         statsMethods.player_stat_analyse(
         players_list,player['name'], turn, turn_stat_dict, total_turn, loosing_turn)
         return True
-    return False
+    else:
+        return False

@@ -1,5 +1,6 @@
 from methods.roll_method import RollMethod
 
+
 class TurnMethod:
     TURN = None
     TURN_DONE = False
@@ -13,7 +14,6 @@ class TurnMethod:
 
     def set_roll_done(self, rolls, score, dice_sorted):
         roll_method = RollMethod(rolls, score, dice_sorted)
-
         self.ROLL_LIST.append(roll_method)
         self.ROLL_LIST = self.ROLL_LIST[:]
         return self.ROLL_LIST[-1]
@@ -39,6 +39,7 @@ class TurnMethod:
         last_roll = self.get_last_roll()
         score_turn, dice_turn_sorted = self.get_turn_score_and_dice_left()
 
-        # print(GameSetting.NB_DICE_ROLLS)
+        # Diminuer la valeur des dés à chaque tour et ensuite lancer les rolls
+        print(self.NB_DICE_ROLLS - dice_turn_sorted)
         print(
             f"roll #{self.ROLL}: {last_roll.DICE_SORTED} scoring dices [] scoring {last_roll.SCORE}, potential total turn score {score_turn}, remaining dice to roll : {dice_turn_sorted}")

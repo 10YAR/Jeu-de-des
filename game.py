@@ -1,11 +1,11 @@
 from models.dice_model import DiceModel
+from models.game_model import GameModel
 from models.player_model import PlayerModel
-from settings.game_setting import GameSetting
 from settings.score_bonus_setting import ScoreBonusSetting
 
 
 def main():
-    game = GameSetting()
+    game = GameModel()
     dice_model = DiceModel()
 
     player_1 = PlayerModel('Jean')
@@ -32,20 +32,13 @@ def main():
         turn_selected.set_roll_done(rolls, score, dice_sorted)
         turn_selected.get_roll_result()
 
-
-
-
         # roll  # 1 : 2 scoring dices [(1, 1), (1, 5)] scoring 150, potential total turn score 150, remaining dice to roll : 3
-
 
         # roll_done.
 
         # print(turn_selected.ROLL_LIST)
 
-
         print('===========================+')
-
-
 
         if turn_selected.ROLL > 2:
             player_turn.set_last_turn_done()

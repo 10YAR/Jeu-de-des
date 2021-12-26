@@ -39,22 +39,24 @@ class PlayerModel:
 
     def get_player_total_score(self):
         self.score = 0
+        total_turns = 0
 
         for turn in self.TURN_LIST:
             if not turn.TURN_LOOSE:
                 score_turn = turn.get_turn_score()
                 self.score += score_turn
+                total_turns += 1
 
         if self.score >= self.game_model.DEFAULT_TARGET_SCORE:
             self.winner = True
 
-        return self.score
+        return self.score, total_turns
 
     def get_player_turns(self):
         return len(self.TURN_LIST)
 
     def get_player_results(self):
-        total_score = self.get_player_total_score()
+        total_score, total_turns = self.get_player_total_score()
         rolls_total = 0
         bonus_total = 0
         potential_lost_points_total = 0

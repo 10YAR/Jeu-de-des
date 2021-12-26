@@ -37,6 +37,7 @@ def main():
         game.get_players_dashboard(turn_selected)
 
     game.get_results_dashboard()
+    game.get_game_resume()
 
 
 main()

@@ -97,8 +97,47 @@ class GameModel(GameSetting):
 
     def get_results_dashboard(self):
         player_winner = self.get_player_winner()
-
         print(f"Game in {player_winner.get_player_turns()} turns")
-
         for player in self.PLAYERS_LIST:
             player.get_player_results()
+
+    def get_game_resume(self):
+        max_turn_score = {
+            'player': None,
+            'score': 0
+        }
+        longest_turn = {
+            'player': None,
+            'length': 0
+        }
+        max_turn_loss = {
+            'player': None,
+            'points': 0
+        }
+
+        for player in self.PLAYERS_LIST:
+            player_max_turn_score = player.get_max_turn_score()
+            if player_max_turn_score >= max_turn_score['score']:
+                max_turn_score = {
+                    'player': player,
+                    'score': player_max_turn_score
+                }
+
+            player_longest_turn = player.get_longest_turn()
+            if player_longest_turn >= longest_turn['length']:
+                longest_turn = {
+                    'player': player,
+                    'length': player_longest_turn
+                }
+
+            player_max_potential_lost_points = player.get_max_potential_lost_points()
+            if player_max_potential_lost_points >= max_turn_loss['points']:
+                max_turn_loss = {
+                    'player': player,
+                    'points': player_max_potential_lost_points
+                }
+
+        print(f"\nMax turn scoring: {max_turn_score['player'].name} with {max_turn_score['score']} points.")
+        print(f"Longest turn: {longest_turn['player'].name} with {longest_turn['length']} rolls.")
+        print(f"Max turn loss: {max_turn_loss['player'].name} with {max_turn_loss['points']} points.")
+

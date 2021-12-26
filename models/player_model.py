@@ -70,3 +70,27 @@ class PlayerModel:
             f"Scoring {total_score} in {rolls_total} rolls with {full_roll_total} full roll(s), "
             f"{bonus_total} bonus and {potential_lost_points_total} points lost"
         )
+
+    def get_max_turn_score(self):
+        player_max_turn_score = 0
+        for turn in self.TURN_LIST:
+            turn_score = turn.get_turn_score()
+            if turn_score >= player_max_turn_score:
+                player_max_turn_score = turn_score
+        return player_max_turn_score
+
+    def get_longest_turn(self):
+        player_longest_turn = 0
+        for turn in self.TURN_LIST:
+            rolls_length = turn.get_rolls_length()
+            if rolls_length >= player_longest_turn:
+                player_longest_turn = rolls_length
+        return player_longest_turn
+
+    def get_max_potential_lost_points(self):
+        potential_lost_points_max = 0
+        for turn in self.TURN_LIST:
+            potential_lost_points = turn.get_potential_lost_points()
+            if potential_lost_points >= potential_lost_points_max:
+                potential_lost_points_max = potential_lost_points
+        return potential_lost_points_max

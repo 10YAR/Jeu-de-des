@@ -5,7 +5,7 @@ class TurnMethod:
     TURN = None
     TURN_DONE = False
 
-    ROLL = 0
+    ROLL = 1
 
     NB_DICE_ROLLS = 0
 

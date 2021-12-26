@@ -21,7 +21,7 @@ def main():
     while not game.get_player_winner():
         player_turn, turn_selected = game.get_player_turn()
 
-        if turn_selected.ROLL == 0:
+        if turn_selected.ROLL == 1:
             print(f"Turn #{game.TURNS} --> {player_turn.name} | score: {player_turn.score}")
 
         rolls = dice_model.get_rolls_dice(turn_selected.NB_DICE_ROLLS)
@@ -36,5 +36,5 @@ def main():
 
     print(game.get_player_winner())
 
-main()
 
+main()

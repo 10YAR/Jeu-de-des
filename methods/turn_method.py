@@ -85,6 +85,7 @@ class TurnMethod:
                     print(f"You win this turn, scoring {score_turn} pts")
 
             else:
+                self.set_turn_done()
                 print(f"You win this turn, scoring {score_turn} pts")
 
     def get_next_player_roll_response(self):

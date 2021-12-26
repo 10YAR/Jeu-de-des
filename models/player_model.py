@@ -2,7 +2,7 @@ from methods.turn_method import TurnMethod
 from settings.game_setting import GameSetting
 
 
-class PlayerModel(GameSetting):
+class PlayerModel:
     # Scores du joueur
     score = 0
 
@@ -20,17 +20,21 @@ class PlayerModel(GameSetting):
 
     winner = False
 
+    game_model = None
+
     def __init__(self, name):
-        GameSetting.__init__(self)
         self.name = name
         self.TURN_LIST = []
+
+    def add_game_model(self, game_model):
+        self.game_model = game_model
 
     def set_last_turn_done(self):
         turn_last = self.TURN_LIST[-1]
         turn_last.TURN_DONE = True
 
     def add_turn_self_player(self, new_turn_value):
-        turn_method = TurnMethod(new_turn_value, GameSetting.NB_DICE_ROLLS)
+        turn_method = TurnMethod(self, new_turn_value)
         self.TURN_LIST.append(turn_method)
 
     def get_player_total_score(self):
@@ -41,7 +45,7 @@ class PlayerModel(GameSetting):
                 score_turn = turn.get_turn_score()
                 self.score += score_turn
 
-        if self.score >= self.DEFAULT_TARGET_SCORE:
+        if self.score >= self.game_model.DEFAULT_TARGET_SCORE:
             self.winner = True
 
         return self.score

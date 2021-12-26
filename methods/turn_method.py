@@ -1,3 +1,5 @@
+import random
+
 from methods.roll_method import RollMethod
 
 
@@ -10,15 +12,16 @@ class TurnMethod:
 
     NB_DICE_ROLLS = 0
 
-    def __init__(self, turn, nb_dice_rolls):
+    def __init__(self, player, turn):
+        self.player = player
         self.TURN = turn
-        self.NB_DICE_ROLLS = nb_dice_rolls
+        self.NB_DICE_ROLLS = player.game_model.NB_DICE_ROLLS
         self.ROLL_LIST = []
 
     def set_roll_done(self, rolls, score, dice_sorted, dice_result_sorted):
         self.NB_DICE_ROLLS -= dice_sorted
 
-        roll_method = RollMethod(rolls, score, dice_sorted, dice_result_sorted)
+        roll_method = RollMethod(self, rolls, score, dice_sorted, dice_result_sorted)
         self.ROLL_LIST.append(roll_method)
         self.ROLL_LIST = self.ROLL_LIST[:]
         return self.ROLL_LIST[-1]
@@ -77,13 +80,18 @@ class TurnMethod:
             self.set_turn_done()
         else:
             if not self.TURN_DONE and not self.TURN_LOOSE and self.NB_DICE_ROLLS > 0:
-                input_continue = input("Continue ? y/n (yes)")
-
-                if input_continue == 'n':
+                if self.get_next_player_roll_response():
+                    self.add_roll()
+                else:
                     self.set_turn_done()
                     print(f"You win this turn, scoring {score_turn} pts")
-                else:
-                    self.add_roll()
 
             else:
                 print(f"You win this turn, scoring {score_turn} pts")
+
+    def get_next_player_roll_response(self):
+        if not self.player.game_model.DEBUG:
+            input_continue = input("Continue ? y/n (yes)")
+        else:
+            input_continue = random.choice(['yes', 'n'])
+        return input_continue != 'n'

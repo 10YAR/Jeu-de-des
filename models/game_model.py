@@ -5,6 +5,7 @@ from settings.game_setting import GameSetting
 class GameModel(GameSetting):
 
     def __init__(self):
+        GameSetting.__init__(self)
         self.PLAYERS_LIST = []
         self.SCORES_LIST = []
 
@@ -32,6 +33,8 @@ class GameModel(GameSetting):
             players : PlayerModel
                 Player model entity
         """
+        for player in players:
+            player.add_game_model(self)
         self.PLAYERS_LIST = players
         self.set_new_turn()
 

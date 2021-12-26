@@ -37,10 +37,19 @@ class PlayerModel:
         turn_method = TurnMethod(self, new_turn_value)
         self.TURN_LIST.append(turn_method)
 
+    def get_player_total_lost_score(self):
+        total_lost_score = 0
+        total_turns = 0
+        for turn in self.TURN_LIST:
+            if turn.TURN_LOOSE:
+                score_lost_turn = turn.get_potential_lost_points()
+                total_lost_score += score_lost_turn
+                total_turns += 1
+        return total_lost_score, total_turns
+
     def get_player_total_score(self):
         self.score = 0
         total_turns = 0
-
         for turn in self.TURN_LIST:
             if not turn.TURN_LOOSE:
                 score_turn = turn.get_turn_score()

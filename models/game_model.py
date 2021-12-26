@@ -115,6 +115,7 @@ class GameModel(GameSetting):
             'points': 0
         }
         total_score_global, total_turns_global = 0, 0
+        total_score_lost_global, total_turns_lost_global = 0, 0
 
         for player in self.PLAYERS_LIST:
             player_max_turn_score = player.get_max_turn_score()
@@ -142,10 +143,15 @@ class GameModel(GameSetting):
             total_score_global += total_score
             total_turns_global += total_turns
 
+            total_score_lost, total_turns_lost = player.get_player_total_lost_score()
+            total_score_lost_global += total_score_lost
+            total_turns_lost_global += total_turns_lost
+
         print(f"\nMax turn scoring: {max_turn_score['player'].name} with {max_turn_score['score']} points.")
         print(f"Longest turn: {longest_turn['player'].name} with {longest_turn['length']} rolls.")
         print(f"Max turn loss: {max_turn_loss['player'].name} with {max_turn_loss['points']} points.")
 
-        print(f"\nMean scoring turn: {round(total_score_global/total_turns_global, 2)} points ({total_turns_global} turns)")
-
-
+        print(
+            f"\nMean scoring turn: {round(total_score_global / total_turns_global, 2)} points ({total_turns_global} turns)")
+        print(
+            f"Mean non scoring turn: {round(total_score_lost_global / total_turns_lost_global, 2)} points ({total_turns_lost_global} turns)")

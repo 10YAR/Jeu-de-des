@@ -4,6 +4,7 @@ from methods.roll_method import RollMethod
 class TurnMethod:
     TURN = None
     TURN_DONE = False
+    TURN_LOOSE = False
 
     ROLL = 1
 
@@ -72,13 +73,10 @@ class TurnMethod:
 
         if last_roll.SCORE <= 0:
             print(f"You lose this turn and a potential to score {score_turn} pts.")
-
-            # TODO Si il loose supprimer le score du tour selectionner
-
+            self.TURN_LOOSE = True
             self.set_turn_done()
-
         else:
-            if not self.TURN_DONE and self.NB_DICE_ROLLS > 0:
+            if not self.TURN_DONE and not self.TURN_LOOSE and self.NB_DICE_ROLLS > 0:
                 input_continue = input("Continue ? y/n (yes)")
 
                 if input_continue == 'n':

@@ -37,8 +37,9 @@ class PlayerModel(GameSetting):
         self.score = 0
 
         for turn in self.TURN_LIST:
-            score_turn = turn.get_turn_score()
-            self.score += score_turn
+            if not turn.TURN_LOOSE:
+                score_turn = turn.get_turn_score()
+                self.score += score_turn
 
         if self.score >= self.DEFAULT_TARGET_SCORE:
             self.winner = True

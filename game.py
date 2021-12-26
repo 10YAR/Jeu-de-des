@@ -10,8 +10,10 @@ def main():
 
     player_1 = PlayerModel('Jean')
     player_2 = PlayerModel('Romain')
+    player_3 = PlayerModel('Victor')
+    player_4 = PlayerModel('Fiona')
 
-    game.add_players(player_1, player_2)
+    game.add_players(player_1, player_2, player_3, player_4)
 
     score_bonus_1 = ScoreBonusSetting(1, 100)
     score_bonus_2 = ScoreBonusSetting(5, 50)
@@ -34,7 +36,7 @@ def main():
 
         game.get_players_dashboard(turn_selected)
 
-    print(game.get_player_winner())
+    game.get_results_dashboard()
 
 
 main()

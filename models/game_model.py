@@ -22,7 +22,7 @@ class GameModel(GameSetting):
             score = player.get_player_total_score()
             total_scores_dashboard += f"{player.name} --> {score} "
 
-        if turn_selected.TURN_DONE:
+        if turn_selected.TURN_DONE or self.get_player_winner():
             print("\n", total_scores_dashboard, "\n")
 
     def add_players(self, *players):
@@ -94,3 +94,11 @@ class GameModel(GameSetting):
                 dice_result_sorted = dice_result_sorted[:]
 
         return score, dice_sorted, dice_result_sorted
+
+    def get_results_dashboard(self):
+        player_winner = self.get_player_winner()
+
+        print(f"Game in {player_winner.get_player_turns()} turns")
+
+        for player in self.PLAYERS_LIST:
+            player.get_player_results()

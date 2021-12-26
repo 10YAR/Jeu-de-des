@@ -49,3 +49,24 @@ class PlayerModel:
             self.winner = True
 
         return self.score
+
+    def get_player_turns(self):
+        return len(self.TURN_LIST)
+
+    def get_player_results(self):
+        total_score = self.get_player_total_score()
+        rolls_total = 0
+        bonus_total = 0
+        potential_lost_points_total = 0
+        full_roll_total = 0
+        for turn in self.TURN_LIST:
+            rolls_total += turn.get_rolls_length()
+            bonus_total += turn.get_rolls_bonus_number()
+            potential_lost_points_total += turn.get_potential_lost_points()
+            full_roll_total += turn.get_full_roll_number()
+
+        print(
+            f"{self.name} {'win' if self.winner else 'lose'}! "
+            f"Scoring {total_score} in {rolls_total} rolls with {full_roll_total} full roll(s), "
+            f"{bonus_total} bonus and {potential_lost_points_total} points lost"
+        )

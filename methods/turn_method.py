@@ -10,8 +10,6 @@ class TurnMethod:
 
     ROLL = 1
 
-    NB_DICE_ROLLS = 0
-
     def __init__(self, player, turn):
         self.player = player
         self.TURN = turn
@@ -95,3 +93,27 @@ class TurnMethod:
         else:
             input_continue = random.choice(['yes', 'n'])
         return input_continue != 'n'
+
+    def get_rolls_length(self):
+        return len(self.ROLL_LIST)
+
+    def get_rolls_bonus_number(self):
+        dice_number = 0
+
+        for roll in self.ROLL_LIST:
+            for dice in roll.DICE_RESULT_SORTED:
+                dice_number += dice.DICE_NUMBER
+        return dice_number
+
+    def get_potential_lost_points(self):
+        if self.TURN_LOOSE:
+            return self.get_turn_score()
+        else:
+            return 0
+
+    def get_full_roll_number(self):
+        full_roll_number = 0
+        for roll in self.ROLL_LIST:
+            if roll.DICE_SORTED >= self.player.game_model.NB_DICE_ROLLS:
+                full_roll_number += 1
+        return full_roll_number

@@ -22,7 +22,7 @@ class PlayerModel:
         turn_last = self.TURN_LIST[-1]
         turn_last.TURN_DONE = True
 
-    def add_turn_self_player(self, new_turn_value) -> None:
+    def add_turn_self_player(self, new_turn_value: int) -> None:
         turn_method = TurnModel(self, new_turn_value)
         self.TURN_LIST.append(turn_method)
 

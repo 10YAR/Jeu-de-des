@@ -1,46 +1,49 @@
 import random
 
+from typing import Tuple, List
+
 from methods.models.roll_model import RollModel
+from methods.models.score_model import ScoreModel
 
 
 class TurnModel:
-    TURN = None
+    TURN: int = None
 
     TURN_DONE: bool = False
     TURN_LOOSE: bool = False
 
     ROLL: int = 1
 
-    def __init__(self, player, turn):
-        self.player = player
-        self.TURN = turn
-        self.NB_DICE_ROLLS = player.game_model.NB_DICE_ROLLS
-        self.ROLL_LIST = []
+    def __init__(self, player_model, turn: int):
+        self.player = player_model
+        self.TURN: int = turn
+        self.NB_DICE_ROLLS: int = player_model.game_model.NB_DICE_ROLLS
+        self.ROLL_LIST: [RollModel] = []
 
-    def set_roll_done(self, rolls, score, dice_sorted, dice_result_sorted):
+    def set_roll_done(self, rolls: [int], score: int, dice_sorted: int, dice_result_sorted: List[ScoreModel]) -> RollModel:
         self.NB_DICE_ROLLS -= dice_sorted
 
-        roll_method = RollModel(self, rolls, score, dice_sorted, dice_result_sorted)
+        roll_method: RollModel = RollModel(self, rolls, score, dice_sorted, dice_result_sorted)
         self.ROLL_LIST.append(roll_method)
         return self.ROLL_LIST[-1]
 
-    def set_turn_done(self):
+    def set_turn_done(self) -> None:
         self.TURN_DONE = True
 
-    def get_last_roll(self):
+    def get_last_roll(self) -> RollModel:
         return self.ROLL_LIST[-1]
 
-    def add_roll(self):
+    def add_roll(self) -> int:
         self.ROLL += 1
         return self.ROLL
 
-    def get_turn_score(self):
-        score_turn = 0
+    def get_turn_score(self) -> int:
+        score_turn: int = 0
         for roll_selected in self.ROLL_LIST:
             score_turn += roll_selected.SCORE
         return score_turn
 
-    def get_turn_score_and_dice_left(self):
+    def get_turn_score_and_dice_left(self) -> Tuple[int, int]:
         score_turn = 0
         dice_turn_sorted = 0
 
@@ -51,16 +54,16 @@ class TurnModel:
         return score_turn, dice_turn_sorted
 
     @staticmethod
-    def get_display_roll_scoring_dice(roll_selected):
-        display = ''
+    def get_display_roll_scoring_dice(roll_selected) -> str:
+        display: str = ''
         for idx, dice_result in enumerate(roll_selected.DICE_RESULT_SORTED):
             display += f"({dice_result.WINNER_FIGURE_VALUE}, {dice_result.DICE_NUMBER})"
             if idx < (len(roll_selected.DICE_RESULT_SORTED) - 1):
                 display += ', '
         return display
 
-    def get_roll_result(self):
-        last_roll = self.get_last_roll()
+    def get_roll_result(self) -> None:
+        last_roll: RollModel = self.get_last_roll()
         score_turn, dice_turn_sorted = self.get_turn_score_and_dice_left()
 
         print(
@@ -68,8 +71,8 @@ class TurnModel:
             f"turn score {score_turn}, remaining dice to roll : {self.NB_DICE_ROLLS}"
         )
 
-    def get_turn_next_roll_logic(self):
-        last_roll = self.get_last_roll()
+    def get_turn_next_roll_logic(self) -> None:
+        last_roll: RollModel = self.get_last_roll()
         score_turn, dice_turn_sorted = self.get_turn_score_and_dice_left()
 
         if last_roll.SCORE <= 0:
@@ -88,32 +91,32 @@ class TurnModel:
                 self.set_turn_done()
                 print(f"You win this turn, scoring {score_turn} pts")
 
-    def get_next_player_roll_response(self):
+    def get_next_player_roll_response(self) -> bool:
         if not self.player.game_model.DEBUG:
-            input_continue = input("Continue ? y/n (yes)")
+            input_continue: str = input("Continue ? y/n (yes)")
         else:
-            input_continue = random.choice(['yes', 'n'])
+            input_continue: str = random.choice(['yes', 'n'])
         return input_continue != 'n'
 
-    def get_rolls_length(self):
+    def get_rolls_length(self) -> int:
         return len(self.ROLL_LIST)
 
-    def get_rolls_bonus_number(self):
-        dice_number = 0
+    def get_rolls_bonus_number(self) -> int:
+        dice_number: int = 0
 
         for roll in self.ROLL_LIST:
             for dice in roll.DICE_RESULT_SORTED:
                 dice_number += dice.DICE_NUMBER
         return dice_number
 
-    def get_potential_lost_points(self):
+    def get_potential_lost_points(self) -> int:
         if self.TURN_LOOSE:
             return self.get_turn_score()
         else:
             return 0
 
-    def get_full_roll_number(self):
-        full_roll_number = 0
+    def get_full_roll_number(self) -> int:
+        full_roll_number: int = 0
         for roll in self.ROLL_LIST:
             if roll.DICE_SORTED >= self.player.game_model.NB_DICE_ROLLS:
                 full_roll_number += 1

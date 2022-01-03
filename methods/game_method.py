@@ -1,5 +1,9 @@
+from typing import Tuple, List, Union
+
 from methods.models.score_model import ScoreModel
+from methods.models.turn_model import TurnModel
 from methods.settings.game_setting import GameSetting
+from methods.settings.score_bonus_setting import ScoreBonusSetting
 
 
 class GameMethod(GameSetting):
@@ -7,17 +11,17 @@ class GameMethod(GameSetting):
     def __init__(self):
         GameSetting.__init__(self)
         self.PLAYERS_LIST = []
-        self.SCORES_LIST = []
+        self.SCORES_LIST: [ScoreBonusSetting] = []
 
-    def add_turn(self):
+    def add_turn(self) -> int:
         self.TURNS += 1
         return self.TURNS
 
-    def get_player_length(self):
+    def get_player_length(self) -> int:
         return len(self.PLAYERS_LIST)
 
-    def get_players_dashboard(self, turn_selected):
-        total_scores_dashboard = "Total scores: "
+    def get_players_dashboard(self, turn_selected) -> None:
+        total_scores_dashboard: str = "Total scores: "
         for player in self.PLAYERS_LIST:
             total_score, total_turns = player.get_player_total_score()
             total_scores_dashboard += f"{player.name} --> {total_score} "
@@ -38,10 +42,10 @@ class GameMethod(GameSetting):
         self.PLAYERS_LIST = players
         self.set_new_turn()
 
-    def add_scores(self, *scores):
-        self.SCORES_LIST = scores
+    def add_scores(self, *scores: [ScoreBonusSetting]) -> None:
+        self.SCORES_LIST: [ScoreBonusSetting] = scores
 
-    def get_player_winner(self):
+    def get_player_winner(self) -> Union[bool]:
         """The function checks if a player wins the game.
 
             Returns
@@ -56,9 +60,9 @@ class GameMethod(GameSetting):
                 return player
         return False
 
-    def get_player_turn(self):
+    def get_player_turn(self) -> Tuple[str, TurnModel]:
         for player in self.PLAYERS_LIST:
-            turn_last = player.TURN_LIST[-1]
+            turn_last: TurnModel = player.TURN_LIST[-1]
 
             if not turn_last.TURN_DONE and turn_last.TURN == self.TURNS:
                 return player, turn_last
@@ -66,15 +70,15 @@ class GameMethod(GameSetting):
         self.set_new_turn()
         return self.PLAYERS_LIST[0], self.PLAYERS_LIST[0].TURN_LIST[-1]
 
-    def set_new_turn(self):
-        new_turn_value = self.add_turn()
+    def set_new_turn(self) -> None:
+        new_turn_value: int = self.add_turn()
         for player in self.PLAYERS_LIST:
             player.add_turn_self_player(new_turn_value)
 
-    def calculate_score(self, dice_face, rolls):
-        score = 0
-        dice_sorted = 0
-        dice_result_sorted = []
+    def calculate_score(self, dice_face: int, rolls: [int]) -> Tuple[int, int, List[ScoreModel]]:
+        score: int = 0
+        dice_sorted: int = 0
+        dice_result_sorted: [int] = []
 
         for face in range(dice_face):
             for score_bonus in self.SCORES_LIST:
@@ -87,20 +91,20 @@ class GameMethod(GameSetting):
                     dice_sorted += rolls[face]
 
         for score_bonus in self.SCORES_LIST:
-            rolls_selected = score_bonus.WINNER_FIGURE_VALUE - 1
+            rolls_selected: [int] = score_bonus.WINNER_FIGURE_VALUE - 1
             if rolls[rolls_selected] > 0:
-                score_model = ScoreModel(score_bonus.WINNER_FIGURE_VALUE, rolls[rolls_selected])
+                score_model: ScoreModel = ScoreModel(score_bonus.WINNER_FIGURE_VALUE, rolls[rolls_selected])
                 dice_result_sorted.append(score_model)
 
         return score, dice_sorted, dice_result_sorted
 
-    def get_results_dashboard(self):
+    def get_results_dashboard(self) -> None:
         player_winner = self.get_player_winner()
         print(f"Game in {player_winner.get_player_turns()} turns")
         for player in self.PLAYERS_LIST:
             player.get_player_results()
 
-    def get_game_resume(self):
+    def get_game_resume(self) -> None:
         max_turn_score = {
             'player': None,
             'score': 0
@@ -113,25 +117,26 @@ class GameMethod(GameSetting):
             'player': None,
             'points': 0
         }
+
         total_score_global, total_turns_global = 0, 0
         total_score_lost_global, total_turns_lost_global = 0, 0
 
         for player in self.PLAYERS_LIST:
-            player_max_turn_score = player.get_max_turn_score()
+            player_max_turn_score: int = player.get_max_turn_score()
             if player_max_turn_score >= max_turn_score['score']:
                 max_turn_score = {
                     'player': player,
                     'score': player_max_turn_score
                 }
 
-            player_longest_turn = player.get_longest_turn()
+            player_longest_turn: int = player.get_longest_turn()
             if player_longest_turn >= longest_turn['length']:
                 longest_turn = {
                     'player': player,
                     'length': player_longest_turn
                 }
 
-            player_max_potential_lost_points = player.get_max_potential_lost_points()
+            player_max_potential_lost_points: int = player.get_max_potential_lost_points()
             if player_max_potential_lost_points >= max_turn_loss['points']:
                 max_turn_loss = {
                     'player': player,

@@ -5,6 +5,10 @@ from src.settings.game_setting import GameSetting
 
 
 class PlayerModel(GameSetting):
+    """
+    Player structure
+    """
+
     score: int = 0
 
     winner: bool = False

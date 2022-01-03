@@ -54,24 +54,6 @@ class TurnModel:
 
         return score_turn, dice_turn_sorted
 
-    @staticmethod
-    def get_display_roll_scoring_dice(roll_selected) -> str:
-        display: str = ''
-        for idx, dice_result in enumerate(roll_selected.DICE_RESULT_SORTED):
-            display += f"({dice_result.WINNER_FIGURE_VALUE}, {dice_result.DICE_NUMBER})"
-            if idx < (len(roll_selected.DICE_RESULT_SORTED) - 1):
-                display += ', '
-        return display
-
-    def get_roll_result(self) -> None:
-        last_roll: RollModel = self.get_last_roll()
-        score_turn, dice_turn_sorted = self.get_turn_score_and_dice_left()
-
-        print(
-            f"roll #{self.roll}: {last_roll.DICE_SORTED} scoring dices [{self.get_display_roll_scoring_dice(last_roll)}] scoring {last_roll.SCORE}, potential total "
-            f"turn score {score_turn}, remaining dice to roll : {self.nb_dice_rolls}"
-        )
-
     def get_turn_next_roll_logic(self) -> None:
         last_roll: RollModel = self.get_last_roll()
         score_turn, dice_turn_sorted = self.get_turn_score_and_dice_left()
@@ -122,3 +104,21 @@ class TurnModel:
             if roll.DICE_SORTED >= self.nb_dice_rolls:
                 full_roll_number += 1
         return full_roll_number
+
+    @staticmethod
+    def get_display_roll_scoring_dice(roll_selected) -> str:
+        display: str = ''
+        for idx, dice_result in enumerate(roll_selected.DICE_RESULT_SORTED):
+            display += f"({dice_result.WINNER_FIGURE_VALUE}, {dice_result.DICE_NUMBER})"
+            if idx < (len(roll_selected.DICE_RESULT_SORTED) - 1):
+                display += ', '
+        return display
+
+    def get_roll_result(self) -> None:
+        last_roll: RollModel = self.get_last_roll()
+        score_turn, dice_turn_sorted = self.get_turn_score_and_dice_left()
+
+        print(
+            f"roll #{self.roll}: {last_roll.DICE_SORTED} scoring dices [{self.get_display_roll_scoring_dice(last_roll)}] scoring {last_roll.SCORE}, potential total "
+            f"turn score {score_turn}, remaining dice to roll : {self.nb_dice_rolls}"
+        )

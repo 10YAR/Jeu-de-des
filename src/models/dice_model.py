@@ -2,9 +2,12 @@ import random
 
 
 class DiceModel:
+    """
+    Dice model structure
+    """
     NB_DICE_FACES: int = 6
 
-    def get_rolls_dice(self, nb_dice_to_roll) -> [int]:
+    def get_rolls_dice(self, nb_dice_to_roll: int) -> [int]:
         """Launch the dice and set a list with an occurrence of each value return by the dice
         Parameters
         ----------

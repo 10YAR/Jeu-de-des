@@ -4,6 +4,9 @@ from src.models.score_model import ScoreModel
 
 
 class RollModel:
+    """
+    Roll structure
+    """
 
     def __init__(self, rolls: [int], score: int, dice_sorted: int, dice_result_sorted: List[ScoreModel]):
         self.ROLLS: [int] = rolls

@@ -59,7 +59,7 @@ class GameMethod(GameSetting):
                 return player
         return False
 
-    def get_player_turn(self) -> Tuple[None, TurnModel]:
+    def get_player_turn(self) -> Tuple[PlayerModel, TurnModel]:
         for player in self.players_list:
             turn_last: TurnModel = player.turn_list[-1]
 

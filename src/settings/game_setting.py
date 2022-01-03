@@ -1,21 +1,25 @@
 class GameSetting:
-    # Nombre de dés a jeter
+    """
+    Constants game
+    """
+
+    # Number of dice to throw
     NB_DICE_ROLLS: int = 5
 
-    # Nombre de tours réalisés
+    # Number of turns completed
     turns: int = 0
 
     # Debug
     DEBUG: bool = True
 
-    # Score à atteindre
+    # Score to reach
     DEFAULT_TARGET_SCORE: int = 2000
 
-    # Nombre d'occurences pour déclencher le bonus
+    # Number of occurrences to trigger the bonus
     TRIGGER_OCCURRENCE_FOR_BONUS: int = 3
 
-    # Multiplicateur de points pour un bonus classique
+    # Point multiplier for a classic bonus
     BONUS_VALUE_FOR_NORMAL_BONUS: int = 100
 
-    # Multiplicateur de points pour un ACE
+    # Point multiplier for an ACE
     BONUS_VALUE_FOR_ACE_BONUS: int = 1000

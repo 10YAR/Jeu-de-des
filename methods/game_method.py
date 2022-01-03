@@ -10,7 +10,7 @@ class GameMethod(GameSetting):
 
     def __init__(self):
         GameSetting.__init__(self)
-        self.PLAYERS_LIST = []
+        self.PLAYERS_LIST: [PlayerModel] = []
         self.SCORES_LIST: [ScoreBonusSetting] = []
 
     def add_turn(self) -> int:
@@ -39,13 +39,13 @@ class GameMethod(GameSetting):
         """
         for player in players:
             player.add_game_model(self)
-        self.PLAYERS_LIST = players
+        self.PLAYERS_LIST: [PlayerModel] = players
         self.set_new_turn()
 
     def add_scores(self, *scores: [ScoreBonusSetting]) -> None:
         self.SCORES_LIST: [ScoreBonusSetting] = scores
 
-    def get_player_winner(self) -> Union[bool]:
+    def get_player_winner(self) -> Union[bool or PlayerModel]:
         """The function checks if a player wins the game.
 
             Returns
@@ -60,7 +60,7 @@ class GameMethod(GameSetting):
                 return player
         return False
 
-    def get_player_turn(self) -> Tuple[str, TurnModel]:
+    def get_player_turn(self) -> Tuple[None, TurnModel]:
         for player in self.PLAYERS_LIST:
             turn_last: TurnModel = player.TURN_LIST[-1]
 
@@ -99,21 +99,21 @@ class GameMethod(GameSetting):
         return score, dice_sorted, dice_result_sorted
 
     def get_results_dashboard(self) -> None:
-        player_winner = self.get_player_winner()
+        player_winner: PlayerModel = self.get_player_winner()
         print(f"Game in {player_winner.get_player_turns()} turns")
         for player in self.PLAYERS_LIST:
             player.get_player_results()
 
     def get_game_resume(self) -> None:
-        max_turn_score = {
+        max_turn_score: dict = {
             'player': None,
             'score': 0
         }
-        longest_turn = {
+        longest_turn: dict = {
             'player': None,
             'length': 0
         }
-        max_turn_loss = {
+        max_turn_loss: dict = {
             'player': None,
             'points': 0
         }

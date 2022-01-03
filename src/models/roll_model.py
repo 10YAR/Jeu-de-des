@@ -5,8 +5,7 @@ from src.models.score_model import ScoreModel
 
 class RollModel:
 
-    def __init__(self, turn, rolls: [int], score: int, dice_sorted: int, dice_result_sorted: List[ScoreModel]):
-        self.turn = turn
+    def __init__(self, rolls: [int], score: int, dice_sorted: int, dice_result_sorted: List[ScoreModel]):
         self.ROLLS: [int] = rolls
         self.SCORE: int = score
         self.DICE_SORTED: int = dice_sorted

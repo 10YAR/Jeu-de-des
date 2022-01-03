@@ -9,15 +9,10 @@ class PlayerModel(GameSetting):
 
     winner: bool = False
 
-    # game_model: GameMethod = None
-
     def __init__(self, name: str) -> None:
         GameSetting.__init__(self)
         self.name: str = name
         self.TURN_LIST: List[TurnModel] = []
-
-    # def add_game_model(self, game_method: GameMethod) -> None:
-    #     self.game_model: GameMethod = game_method
 
     def set_last_turn_done(self) -> None:
         turn_last: TurnModel = self.TURN_LIST[-1]

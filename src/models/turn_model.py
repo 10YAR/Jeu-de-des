@@ -1,5 +1,4 @@
 import random
-
 from typing import Tuple, List
 
 from src.models.roll_model import RollModel
@@ -21,10 +20,11 @@ class TurnModel:
         self.ROLL_LIST: [RollModel] = []
         self.debug: bool = debug
 
-    def set_roll_done(self, rolls: [int], score: int, dice_sorted: int, dice_result_sorted: List[ScoreModel]) -> RollModel:
+    def set_roll_done(self, rolls: [int], score: int, dice_sorted: int,
+                      dice_result_sorted: List[ScoreModel]) -> RollModel:
         self.NB_DICE_ROLLS -= dice_sorted
 
-        roll_method: RollModel = RollModel(self, rolls, score, dice_sorted, dice_result_sorted)
+        roll_method: RollModel = RollModel(rolls, score, dice_sorted, dice_result_sorted)
         self.ROLL_LIST.append(roll_method)
         return self.ROLL_LIST[-1]
 

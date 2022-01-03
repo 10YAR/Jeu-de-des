@@ -44,7 +44,7 @@ class GameMethod(GameSetting):
     def add_scores(self, *scores: [ScoreBonusSetting]) -> None:
         self.SCORES_LIST: [ScoreBonusSetting] = scores
 
-    def get_player_winner(self) -> Union[bool or PlayerModel]:
+    def get_player_winner(self) -> Union[bool, PlayerModel]:
         """The function checks if a player wins the game.
 
             Returns

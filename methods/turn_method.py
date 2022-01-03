@@ -5,6 +5,7 @@ from methods.roll_method import RollMethod
 
 class TurnMethod:
     TURN = None
+
     TURN_DONE = False
     TURN_LOOSE = False
 
@@ -21,7 +22,6 @@ class TurnMethod:
 
         roll_method = RollMethod(self, rolls, score, dice_sorted, dice_result_sorted)
         self.ROLL_LIST.append(roll_method)
-        self.ROLL_LIST = self.ROLL_LIST[:]
         return self.ROLL_LIST[-1]
 
     def set_turn_done(self):

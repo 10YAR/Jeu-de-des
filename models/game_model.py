@@ -91,7 +91,6 @@ class GameModel(GameSetting):
             if rolls[rolls_selected] > 0:
                 score_model = ScoreModel(score_bonus.WINNER_FIGURE_VALUE, rolls[rolls_selected])
                 dice_result_sorted.append(score_model)
-                dice_result_sorted = dice_result_sorted[:]
 
         return score, dice_sorted, dice_result_sorted
 

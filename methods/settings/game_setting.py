@@ -1,6 +1,3 @@
-from methods.turn_method import TurnMethod
-
-
 class GameSetting:
     # Nombre de dés a jeter
     NB_DICE_ROLLS = 5

@@ -1,5 +1,4 @@
-from methods.turn_method import TurnMethod
-from settings.game_setting import GameSetting
+from methods.models.turn_model import TurnModel
 
 
 class PlayerModel:
@@ -21,7 +20,7 @@ class PlayerModel:
         turn_last.TURN_DONE = True
 
     def add_turn_self_player(self, new_turn_value):
-        turn_method = TurnMethod(self, new_turn_value)
+        turn_method = TurnModel(self, new_turn_value)
         self.TURN_LIST.append(turn_method)
 
     def get_player_total_lost_score(self):

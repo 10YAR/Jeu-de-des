@@ -1,4 +1,4 @@
-class RollMethod:
+class RollModel:
 
     def __init__(self, turn, rolls, score, dice_sorted, dice_result_sorted):
         self.turn = turn

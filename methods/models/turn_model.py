@@ -1,9 +1,9 @@
 import random
 
-from methods.roll_method import RollMethod
+from methods.models.roll_model import RollModel
 
 
-class TurnMethod:
+class TurnModel:
     TURN = None
 
     TURN_DONE = False
@@ -20,7 +20,7 @@ class TurnMethod:
     def set_roll_done(self, rolls, score, dice_sorted, dice_result_sorted):
         self.NB_DICE_ROLLS -= dice_sorted
 
-        roll_method = RollMethod(self, rolls, score, dice_sorted, dice_result_sorted)
+        roll_method = RollModel(self, rolls, score, dice_sorted, dice_result_sorted)
         self.ROLL_LIST.append(roll_method)
         return self.ROLL_LIST[-1]
 

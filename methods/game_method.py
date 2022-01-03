@@ -1,5 +1,5 @@
-from models.score_model import ScoreModel
-from settings.game_setting import GameSetting
+from methods.models.score_model import ScoreModel
+from methods.settings.game_setting import GameSetting
 
 
 class GameModel(GameSetting):

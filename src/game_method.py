@@ -1,9 +1,9 @@
 from typing import Tuple, List, Union
 
-from methods.models.score_model import ScoreModel
-from methods.models.turn_model import TurnModel
-from methods.settings.game_setting import GameSetting
-from methods.settings.score_bonus_setting import ScoreBonusSetting
+from src.models.score_model import ScoreModel
+from src.models.turn_model import TurnModel
+from src.settings.game_setting import GameSetting
+from src.settings.score_bonus_setting import ScoreBonusSetting
 
 
 class GameMethod(GameSetting):

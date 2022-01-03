@@ -2,8 +2,8 @@ import random
 
 from typing import Tuple, List
 
-from methods.models.roll_model import RollModel
-from methods.models.score_model import ScoreModel
+from src.models.roll_model import RollModel
+from src.models.score_model import ScoreModel
 
 
 class TurnModel:

@@ -1,6 +1,6 @@
 from typing import List
 
-from methods.models.score_model import ScoreModel
+from src.models.score_model import ScoreModel
 
 
 class RollModel:

@@ -1,7 +1,7 @@
-from methods.models.dice_model import DiceModel
-from methods.game_method import GameMethod
-from methods.models.player_model import PlayerModel
-from methods.settings.score_bonus_setting import ScoreBonusSetting
+from src.models.dice_model import DiceModel
+from src.game_method import GameMethod
+from src.models.player_model import PlayerModel
+from src.settings.score_bonus_setting import ScoreBonusSetting
 
 
 def main():

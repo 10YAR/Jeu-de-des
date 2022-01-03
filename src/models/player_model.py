@@ -1,8 +1,7 @@
 from typing import Tuple, List
 
-# from methods.game_method import GameMethod
-from methods.game_method import GameMethod
-from methods.models.turn_model import TurnModel
+from src.game_method import GameMethod
+from src.models.turn_model import TurnModel
 
 
 class PlayerModel:

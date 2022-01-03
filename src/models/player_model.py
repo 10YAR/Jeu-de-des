@@ -1,29 +1,30 @@
 from typing import Tuple, List
 
-from src.game_method import GameMethod
 from src.models.turn_model import TurnModel
+from src.settings.game_setting import GameSetting
 
 
-class PlayerModel:
+class PlayerModel(GameSetting):
     score: int = 0
 
     winner: bool = False
 
-    game_model: GameMethod = None
+    # game_model: GameMethod = None
 
     def __init__(self, name: str) -> None:
+        GameSetting.__init__(self)
         self.name: str = name
         self.TURN_LIST: List[TurnModel] = []
 
-    def add_game_model(self, game_method: GameMethod) -> None:
-        self.game_model: GameMethod = game_method
+    # def add_game_model(self, game_method: GameMethod) -> None:
+    #     self.game_model: GameMethod = game_method
 
     def set_last_turn_done(self) -> None:
         turn_last: TurnModel = self.TURN_LIST[-1]
         turn_last.TURN_DONE = True
 
-    def add_turn_self_player(self, new_turn_value: int) -> None:
-        turn_method: TurnModel = TurnModel(self, new_turn_value)
+    def add_turn_self_player(self, new_turn_value: int, nb_dice_rolls: int, debug: bool) -> None:
+        turn_method: TurnModel = TurnModel(self, new_turn_value, nb_dice_rolls, debug)
         self.TURN_LIST.append(turn_method)
 
     def get_player_total_lost_score(self) -> Tuple[int, int]:
@@ -45,7 +46,7 @@ class PlayerModel:
                 self.score += score_turn
                 total_turns += 1
 
-        if self.score >= self.game_model.DEFAULT_TARGET_SCORE:
+        if self.score >= self.DEFAULT_TARGET_SCORE:
             self.winner: bool = True
 
         return self.score, total_turns

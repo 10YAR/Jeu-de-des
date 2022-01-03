@@ -14,11 +14,12 @@ class TurnModel:
 
     ROLL: int = 1
 
-    def __init__(self, player_model, turn: int):
+    def __init__(self, player_model, turn: int, nb_dice_rolls: int, debug: bool):
         self.player = player_model
         self.TURN: int = turn
-        self.NB_DICE_ROLLS: int = player_model.game_model.NB_DICE_ROLLS
+        self.NB_DICE_ROLLS: int = nb_dice_rolls
         self.ROLL_LIST: [RollModel] = []
+        self.debug: bool = debug
 
     def set_roll_done(self, rolls: [int], score: int, dice_sorted: int, dice_result_sorted: List[ScoreModel]) -> RollModel:
         self.NB_DICE_ROLLS -= dice_sorted
@@ -92,7 +93,7 @@ class TurnModel:
                 print(f"You win this turn, scoring {score_turn} pts")
 
     def get_next_player_roll_response(self) -> bool:
-        if not self.player.game_model.DEBUG:
+        if not self.debug:
             input_continue: str = input("Continue ? y/n (yes)")
         else:
             input_continue: str = random.choice(['yes', 'n'])
@@ -118,6 +119,6 @@ class TurnModel:
     def get_full_roll_number(self) -> int:
         full_roll_number: int = 0
         for roll in self.ROLL_LIST:
-            if roll.DICE_SORTED >= self.player.game_model.NB_DICE_ROLLS:
+            if roll.DICE_SORTED >= self.NB_DICE_ROLLS:
                 full_roll_number += 1
         return full_roll_number

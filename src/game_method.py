@@ -1,5 +1,6 @@
 from typing import Tuple, List, Union
 
+from src.models.player_model import PlayerModel
 from src.models.score_model import ScoreModel
 from src.models.turn_model import TurnModel
 from src.settings.game_setting import GameSetting
@@ -37,8 +38,6 @@ class GameMethod(GameSetting):
             players : PlayerModel
                 Player model entity
         """
-        for player in players:
-            player.add_game_model(self)
         self.PLAYERS_LIST: [PlayerModel] = players
         self.set_new_turn()
 
@@ -73,7 +72,7 @@ class GameMethod(GameSetting):
     def set_new_turn(self) -> None:
         new_turn_value: int = self.add_turn()
         for player in self.PLAYERS_LIST:
-            player.add_turn_self_player(new_turn_value)
+            player.add_turn_self_player(new_turn_value, self.NB_DICE_ROLLS, self.DEBUG)
 
     def calculate_score(self, dice_face: int, rolls: [int]) -> Tuple[int, int, List[ScoreModel]]:
         score: int = 0

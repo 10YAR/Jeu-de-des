@@ -23,10 +23,10 @@ def main():
     while not game.get_player_winner():
         player_turn, turn_selected = game.get_player_turn()
 
-        if turn_selected.ROLL == 1:
-            print(f"Turn #{game.TURNS} --> {player_turn.name} | score: {player_turn.score}")
+        if turn_selected.roll == 1:
+            print(f"Turn #{game.turns} --> {player_turn.name} | score: {player_turn.score}")
 
-        rolls: [int] = dice_model.get_rolls_dice(turn_selected.NB_DICE_ROLLS)
+        rolls: [int] = dice_model.get_rolls_dice(turn_selected.nb_dice_rolls)
 
         score, dice_sorted, dice_result_sorted = game.calculate_score(dice_model.NB_DICE_FACES, rolls)
 

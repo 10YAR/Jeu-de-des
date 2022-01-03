@@ -2,7 +2,6 @@ import random
 
 
 class DiceModel:
-    # Nombre de faces des dés
     NB_DICE_FACES: int = 6
 
     def get_rolls_dice(self, nb_dice_to_roll) -> [int]:

@@ -3,7 +3,7 @@ class GameSetting:
     NB_DICE_ROLLS: int = 5
 
     # Nombre de tours réalisés
-    TURNS: int = 0
+    turns: int = 0
 
     # Debug
     DEBUG: bool = True

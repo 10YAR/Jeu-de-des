@@ -2,7 +2,7 @@ from methods.models.score_model import ScoreModel
 from methods.settings.game_setting import GameSetting
 
 
-class GameModel(GameSetting):
+class GameMethod(GameSetting):
 
     def __init__(self):
         GameSetting.__init__(self)

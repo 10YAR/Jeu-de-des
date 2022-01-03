@@ -1,11 +1,11 @@
 from methods.models.dice_model import DiceModel
-from methods.game_method import GameModel
+from methods.game_method import GameMethod
 from methods.models.player_model import PlayerModel
 from methods.settings.score_bonus_setting import ScoreBonusSetting
 
 
 def main():
-    game = GameModel()
+    game = GameMethod()
     dice_model = DiceModel()
 
     player_1 = PlayerModel('Jean')

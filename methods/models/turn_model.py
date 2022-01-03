@@ -6,10 +6,10 @@ from methods.models.roll_model import RollModel
 class TurnModel:
     TURN = None
 
-    TURN_DONE = False
-    TURN_LOOSE = False
+    TURN_DONE: bool = False
+    TURN_LOOSE: bool = False
 
-    ROLL = 1
+    ROLL: int = 1
 
     def __init__(self, player, turn):
         self.player = player
